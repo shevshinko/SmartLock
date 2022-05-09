@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+   <head>
+      <style>
+         .p {
+            font-family: Helvetica, sans-serif;
+         }
+         
+         .button {
+            background-color: white;
+            border: none;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 12px;
+            margin: 4px 2px;
+            font-family: Helvetica;
+            font-size: 16px;
+            cursor: pointer;
+         }
+         
+         table {
+            width: 50%;
+         }
+      </style>
+      <title>{{ title }}</title>
+      <link rel="stylesheet" href='../static/style.css'>
+      <!--You can find a secret file in ../static/secrets.txt-->
+   </head>
+   
+   <body>
+      <center><h1 class=p style="color:white;">Spectre's box</h1></center>
+      <p><center><img src='../static/spectre.png' width="176" height="182"></center></p>
+      <center><p class=p style="color:white;">You have reached Spectre's secret page. With the button below you can unlock Spectre's box.</p></center>
+      <center>
+      <a href="/lock/open" class="button">OPEN BOX</a></button></center>	
+      <br><br>
+      <center>
+      <table>
+         <td><p class=p style="color:white;font-size:80%;">(c) 2022, Spectre</p></td>
+         <td><p class=p style="color:white;font-size:80%;">{{ time }}</p></td>
+         <td><p class=p style="color:white;font-size:80%"> Status: {{ lockSts  }}</p></td>
+      </table>
+      </center>
+   </body>
+</html>
