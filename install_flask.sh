@@ -12,7 +12,7 @@ line="@reboot sudo python3 /home/pi/SmartLock/run.py"
 
 read -p "Would you like to reboot now? (Y)-yes (N)-no " ASK
 
-while [ "$ASK" != "Y"||"y" ] && [ "$ASK" != "N"||"n" ]
+while [ "$ASK" != "y" ] && [ "$ASK" != "n" ]
 do
 	echo "No valid answer has been given... Try Again later!"
 done
