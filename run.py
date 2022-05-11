@@ -10,12 +10,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 # Define actuators GPIOs
-relay  = 18	#GPIO 18 (pin 12 on RPI) to IN port on Relay
-btn = 23 #Closing indicator to GPIO 23 (pin 16 on RPI)
-led = 24 #LED to GPIO 24 (pin 18 on RPI)
-
-# Initialize GPIO status variables
-lockSts = 0
+relay  = 18	#GPIO 18 to IN port on Relay
+btn = 23 
+led = 24
 
 # Define led pins as output
 GPIO.setup(relay, GPIO.OUT)
@@ -30,6 +27,11 @@ def index():
 	# Read Sensors Status
 	now = datetime.datetime.now()
 	timeString = now.strftime("%Y-%m-%d %H:%M")
+	button_state = GPIO.input(btn)
+	if button_state == False:
+		lockSts = "Lock closed!"
+	else:
+		lockSts = "Lock open!"
 	templateData = {
 	      'title' : 'Spectres secret page!',
 	      'time' : timeString,
@@ -42,8 +44,10 @@ def listner():
 		button_state = GPIO.input(btn)
 		if button_state == False:
 			GPIO.output(led, False)
+			lockSts = "Lock closed!"
 		else:
 			GPIO.output(led, True)
+			lockSts = "Lock open!"
 			
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
@@ -56,22 +60,14 @@ def action(deviceName, action):
 		GPIO.output(actuator, GPIO.LOW)
 		sleep(1)
 		GPIO.output(actuator, GPIO.HIGH)   
-	lockSts = GPIO.input(actuator)
-	templateData = {
-		'title' : 'Spectres secret page!',
-		'time' : timeString,
-		'lockSts' : lockSts,
-        }
-	return render_template('index.html', **templateData)
+	button_state = GPIO.input(btn)
+	if button_state == False:
+		lockSts = "Lock closed!"
+	else:
+		lockSts = "Lock open!"
 
-def listner():
-	while True:
-		button_state = GPIO.input(btn)
-		if button_state == False:
-			GPIO.output(led, False)
-		else:
-			GPIO.output(led, True)
-	
+	return redirect(url_for("index"))
+
 if __name__ == "__main__":
 	_thread.start_new_thread(listner, ())
 	app.run(host="0.0.0.0", port=80,threaded=True)
