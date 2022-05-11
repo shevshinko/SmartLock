@@ -14,11 +14,13 @@ read -p "Would you like to reboot now? (Y)-yes (N)-no " ASK
 
 while [ "$ASK" != "y" ] && [ "$ASK" != "n" ]
 do
-	echo "No valid answer has been given... Try Again later!"
+	echo "********************************"
+	echo "No valid answer has been given"
+	echo "********************************"
+	break
 done
 
-if [ "$ASK" = "Y"||"y" ]; then
-	#reboot
+if [ "$ASK" = "y" ]; then
 	reboot
 
 else 
