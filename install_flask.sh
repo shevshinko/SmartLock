@@ -8,7 +8,10 @@ echo "Flask has been installed succesfully!!"
 echo "****************************************"
 
 line="@reboot sudo python3 /home/pi/SmartLock/run.py"
-(sudo crontab -l; echo "$line")
+crontab -l | { cat; echo "$line"; } | crontab -
+
+crontab -l 
+
 
 read -p "Would you like to reboot now? (Y)-yes (N)-no " ASK
 
